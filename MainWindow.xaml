@@ -1,0 +1,165 @@
+﻿<Window x:Class="listApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:listApp"
+        mc:Ignorable="d"
+        Closing="Window_Closing"
+        Title="listApp" Height="500" Width="800">
+    
+    <Grid Background="#FF2C2929">
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
+            <Menu>
+                <MenuItem Header="_File">
+                    <MenuItem Header="_Save" Click="MenuItemSave_Click" />
+                    <MenuItem Header="_Open" />
+                    <Separator />
+                    <MenuItem Header="_Exit" Click="MenuItemExit_Click" />
+                </MenuItem>
+                <MenuItem Header="_About">
+                    <MenuItem Header="Version" />
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+
+        <!-- Left Side of Window -->
+        <Border Grid.Column="0" Grid.Row="1" BorderBrush="Black" BorderThickness="0 0 1 0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.8*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+
+                <!--Adding/Removing Users-->
+                <StackPanel Grid.Row="0"  Margin="10" >
+                    <TextBlock Foreground="White">First Name:</TextBlock>
+                    <TextBox x:Name="FirstnameTextbox" />
+
+                    <TextBlock Foreground="White">Last Name:</TextBlock>
+                    <TextBox x:Name="LastnameTextbox" />
+
+                    <TextBlock Foreground="White">Role:</TextBlock>
+                    <ComboBox SelectedIndex="0" x:Name="RoleCombobox">
+                        <ComboBoxItem>Regular User</ComboBoxItem>
+                        <ComboBoxItem>Manager</ComboBoxItem>
+                        <ComboBoxItem>Administrator</ComboBoxItem>
+                    </ComboBox>
+
+                    <Button Background="#FF1F85DA" BorderBrush="{x:Null}" Foreground="White" Margin="0 10" x:Name="AddUserButton" Click="AddUserButton_Click" ClickMode="Release">Add New User</Button>
+                    <Button Background="#FF1F85DA" Foreground="White" BorderBrush="{x:Null}" Margin="0 10" x:Name="RemoveUserButton" Click="RemoveUserButton_Click" ClickMode="Release">Remove User</Button>
+                </StackPanel>
+
+                <!--User Informations-->
+                <StackPanel Grid.Row="1" Margin="10" x:Name="InfoStackPanel" Visibility="Collapsed">
+                    <TextBlock Foreground="White" TextAlignment="Center">User Info:</TextBlock>
+                    
+                    <!--First Name-->
+                    <TextBlock Foreground="White">First Name:</TextBlock>
+                    <TextBox x:Name="InfoFirstNameTextbox" IsEnabled="False"/>
+
+                    <!--Last Name-->
+                    <TextBlock Foreground="White" Margin="0 5 0 0">Last Name:</TextBlock>
+                    <TextBox x:Name="InfoLastNameTextbox" IsEnabled="False"/>
+
+                    <!--Date of Birth-->
+                    <TextBlock Foreground="White" Margin="0 5 0 0">Date of Birth:</TextBlock>
+                    <TextBox x:Name="InfoBirthDateTextbox" IsEnabled="False"/>
+
+                    <!--Date of Employment-->
+                    <TextBlock Foreground="White" Margin="0 5 0 0">Date of Employment:</TextBlock>
+                    <TextBox x:Name="InfoEmploymentDateTextbox" IsEnabled="False"/>
+
+                    <!--Buttons Edit/Save-->
+                    <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
+                        <Button x:Name="InfoEditButton" Click="InfoEditButton_Click" Background="#FF1F85DA" BorderBrush="{x:Null}" Foreground="White" Margin="0 0 10 0" Padding="10 2">Edit</Button>
+
+                        <Button x:Name="InfoSaveButton" Click="InfoSaveButton_Click" Background="#FF1F85DA" BorderBrush="{x:Null}" Foreground="White" Margin="10 0 0 0" Padding="10 2" Visibility="Collapsed">Save</Button>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Right Side of Window -->
+        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1 0 0 0">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+
+                <!--Regular Users-->
+                <DockPanel Grid.Row="0" x:Name="RUsersDockPanel">
+                    <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Stretch" Foreground="White">Regular Users:</TextBlock>
+                    <ListBox DockPanel.Dock="Bottom" ItemsSource="{Binding users}" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="0" MinHeight="50"  VerticalAlignment="Stretch" SelectionMode="Extended" x:Name="RUsersListbox" Background="#FF464242" BorderBrush="Black" Foreground="White">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Text="{Binding lastname, Mode = TwoWay}"/>
+                                    <TextBlock Text="{Binding firstname, Mode = TwoWay}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <EventSetter Event="PreviewMouseLeftButtonDown" Handler="Listbox_PreviewMouseLeftButtonDown"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </DockPanel>
+
+                <!--Managers-->
+                <DockPanel Grid.Row="1">
+                    <TextBlock DockPanel.Dock="Top" Margin="0 10 0 0" Foreground="white">Managers:</TextBlock>
+                    <ListBox DockPanel.Dock="Bottom" ItemsSource="{Binding managers}" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1" MinHeight="50" VerticalAlignment="Stretch" SelectionMode="Extended" x:Name="ManagersListbox" Background="#FF464242" BorderBrush="Black" Foreground="White">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Text="{Binding lastname, Mode=TwoWay}"/>
+                                    <TextBlock Text="{Binding firstname, Mode=TwoWay}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <EventSetter Event="PreviewMouseLeftButtonDown" Handler="Listbox_PreviewMouseLeftButtonDown"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </DockPanel>
+
+                <!--Administrators-->
+                <DockPanel Grid.Row="2">
+                    <TextBlock DockPanel.Dock="Top" Grid.Row="2" Margin="0 10 0 0" Foreground="white">Administrators:</TextBlock>
+                    <ListBox DockPanel.Dock="Bottom" ItemsSource="{Binding administrators}" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="2" MinHeight="50" VerticalAlignment="Stretch" SelectionMode="Extended" x:Name="AdministratorsListbox" Background="#FF464242" BorderBrush="Black" Foreground="White">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" Text="{Binding lastname, Mode=TwoWay}"/>
+                                    <TextBlock Text="{Binding firstname, Mode=TwoWay}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <EventSetter Event="PreviewMouseLeftButtonDown" Handler="Listbox_PreviewMouseLeftButtonDown"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </DockPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<ArrayOfRegular xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Regular>
+    <firstname>Stanisław</firstname>
+    <lastname>Pryk</lastname>
+    <birthdate />
+    <employmentdate />
+    <role>User</role>
+  </Regular>
+  <Regular>
+    <firstname>Maciej</firstname>
+    <lastname>Stoiński</lastname>
+    <birthdate />
+    <employmentdate />
+    <role>User</role>
+  </Regular>
+  <Regular>
+    <firstname>Gerwazy</firstname>
+    <lastname>Trąbka</lastname>
+    <role>User</role>
+  </Regular>
+</ArrayOfRegular>
