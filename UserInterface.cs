@@ -25,7 +25,7 @@ namespace listApp
             switch (XMLLoad())
             {
                 case true:
-                    //MessageBox.Show("Files loaded succesfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
+                    //MessageBox.Show("Files loaded succesfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);;;
                     break;
 
                 case false:
